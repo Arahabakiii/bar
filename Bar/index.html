@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Бар Arahabaki-shin no Haka</title>
+    <link rel="icon" href="icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+  body {
+    margin: 0; /* удаление отступов у body */
+    padding: 0; /* удаление отступов у body */
+    height: 100%;
+    background-color: #f8f9fa; /* цвет заднего фона контейнера */
+  }
+  .Menus {
+    color: white;
+    text-shadow: 10px 5px 10px rgba(75, 183, 237, 0.9);
+  }
+  .background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(' Sakura.jpg');
+    background-size: cover;
+    filter: blur(10px); /* применение размытия к заднему фону */
+    z-index: -1; /* помещение заднего фона под другие элементы */
+  }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 36px;
+            margin: 0;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: #fff;
+            font-size: 20px;
+        }
+        section {
+            padding: 40px 0;
+        }
+        .hero-content {
+            text-align: center;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        .menu-item {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            background-color: #fff;
+        }
+        .modal-content {
+            padding: 20px;
+        }
+        #booking-info img {
+            width: 100%;
+            margin-top: 20px;
+        }
+        /* Стили для списка товаров */
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+        .product-item {
+            background-color: #fff;
+            color: #131d52;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+        .product-item img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .product-item:hover {
+            transform: scale(1.05);
+        }
+        .product-item:hover img {
+            transform: scale(1.1);
+        }
+        .product-item h3 {
+            margin: 10px 0;
+        }
+        .product-item p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .product-item .specs {
+            font-weight: bold;
+        }
+        .add-to-cart {
+            background-color: #1a3678;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: inline-block;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .add-to-cart:hover {
+            background-color: #1a3678;
+        }
+        /* Стили для корзины */
+        .cart {
+            background-color: #fff;
+            color: #000;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .cart table {
+            width: 100%;
+        }
+        .cart th, .cart td {
+            padding: 10px;
+            text-align: left;
+        }
+        .cart-total {
+            text-align: right;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        .checkout-btn {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+        /* Анимация добавления товара в корзину */
+        .confirmation {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            animation: slideIn 0.5s ease-in-out;
+        }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <img src="Sakura.jpg" alt="Фоновое изображение" class="background-image">
+    <header style="background-color: rgb(17, 33, 44);">
+       
+        <nav>
+            <div class="fixed-top">
+                <ul>
+                    <li><a href="#food" style="font-weight: bold; text-decoration: underline;">Блюда</a></li>
+                    <li><a href="#drink" style="font-weight: bold; text-decoration: underline;">Напитки</a></li>
+                    <li><a href="#booking" style="font-weight: bold; text-decoration: underline;" data-toggle="modal" data-target="#bookingModal">Бронирование</a></li>
+                    <li><a href="#cart" style="font-weight: bold; text-decoration: underline;">Корзина</a></li>
+                    <li><a href="index2.html" style="font-weight: bold; text-decoration: underline;">О нас</a></li>
+                </ul>
+            </div>
+            
+        </nav>
+    </header>
+
+    <section id="hero">
+        <div class="hero-content">
+            <h2>Добро пожаловать</h2>
+            <p>Бар "Гробница Бога Арахабаки"</p>
+            <p>Откройте для себя вкусы древней Японии.</p>
+         
+        </div>
+    </section>
+    
+<!-- Секция для списка товаров -->
+<section id="products">
+    <div class="container">
+        <h1 class="Menus" style="Background-color: rgba(0, 0, 0, 0.71);">Наше Меню</h1>
+        <h3 class="Menus" id="drink"style="Background-color: rgba(0, 0, 0, 0.71);">Наши Напитки</h3>
+        <div class="product-list">
+            <!-- Пример товара -->
+            <div class="product-item">
+                <img src="sake.jpg" alt="Саке">
+                <h3>Саке</h3>
+                <p class="specs">Традиционный японский рисовый алкогольный напиток<br>50 мл / Бутылка</p>
+                <p>Цена: 500тг / 3000 тг</p>
+                <button class="btn btn-primary add-to-cart" data-name="Саке" data-price="500">Добавить в корзину</button>
+            </div>
+            <div class="product-item">
+                <img src="whisky.jpg" alt="Сётю">
+                <h3>Японский виски</h3>
+                <p class="specs">Престижный алкогольный напиток<br>50 мл / Бутылка</p>
+                <p>Цена: 2000тг / 10000 тг</p>
+                <button class="btn btn-primary add-to-cart" data-name="Японский виски" data-price="2000">Добавить в корзину</button>
+            </div>
+            <div class="product-item">
+                <img src="toso.jpg" alt="Умэсю">
+                <h3>Тосо</h3>
+                <p class="specs">Традиционный японский рисовый напиток<br>50 мл / Бутылка</p>
+                <p>Цена: 600тг / 3500 тг</p>
+                <button class="btn btn-primary add-to-cart" data-name="Тосо" data-price="600">Добавить в корзину</button>
+            </div>
+            <div class="product-item">
+                <img src="setyu.jpg" alt="Авамори">
+                <h3>Сетю</h3>
+                <p class="specs">Японское рисовое вино среднего класса<br>100 мл / Бутылка</p>
+                <p>Цена: 1000тг / 5000 тг</p>
+                <button class="btn btn-primary add-to-cart" data-name="Сетю" data-price="1000">Добавить в корзину</button>
+            </div>
+            <div class="product-item">
+                <img src="avamori.jpg" alt="Авамори">
+                <h3>Авамори</h3>
+                <p class="specs">	Японское рисовое вино премиум класса<br>100 мл / Бутылка</p>
+                <p>Цена: 1500тг / 7000 тг</p>
+                <button class="btn btn-primary add-to-cart" data-name="Авамори" data-price="1500">Добавить в корзину</button>
+            </div>
+            <!-- Добавьте больше товаров по мере необходимости -->
+        </div>
+        <h3 class="Menus" id="food"style="Background-color: rgba(0, 0, 0, 0.71);">Наши блюда</h3>
+        <div class="product-list">
+            <!-- Пример товара -->
+            <div class="product-item">
+                <img src="tempura.jpg" alt="Саке">
+                <h3>Темпура</h3>
+                <p class="specs">	Классическое японское блюдо из обжаренных овощей и морепродуктов в хрустящем тесте<br>Время готовки:10 мин</p>
+                <p>Цена: 3000 тг</p>
+                <button class="btn btn-primary add-to-cart" data-name="Темпура" data-price="3000">Добавить в корзину</button>
+            </div>
+            <div class="product-item">
+                <img src="curry-rice.jpg" alt="Сётю">
+                <h3>Карри с рисом</h3>
+                <p class="specs">Пряное японское карри из обжаренных овощей с нежным рисом	<br>Порция:250 г<br>Время готовки:15 мин</p>
+                <p>Цена: 1300 тг</p>
+                <button class="btn btn-primary add-to-cart" data-name="Карри с рисом" data-price="1300">Добавить в корзину</button>
+            </div>
+            <div class="product-item">
+                <img src="tonkatsu.jpg" alt="Умэсю">
+                <h3>Тонкацу</h3>
+                <p class="specs">Жареная свиная котлета, покрытая хрустящей панировкой<br>Порция:300 г<br>Время готовки:20 мин</p>
+                <p>Цена: 2800 тг</p>
+                <button class="btn btn-primary add-to-cart" data-name="Тонкацу" data-price="2800">Добавить в корзину</button>
+            </div>
+            <div class="product-item">
+                <img src="soba.jpg" alt="Авамори">
+                <h3>Японская Соба</h3>
+                <p class="specs">Лапша из гречневой муки, подается в бульоне<br>Порция:250 г<br>Время готовки:15 мин</p>
+                <p>Цена: 2200 тг</p>
+                <button class="btn btn-primary add-to-cart" data-name="Японская Соба" data-price="2200">Добавить в корзину</button>
+            </div>
+            <div class="product-item">
+                <img src="ramen.jpg" alt="Авамори">
+                <h3>Рамен</h3>
+                <p class="specs">Юлюдо состоящее из лапши, мяса, овощей и бульона<br>Порция:300 г<br>Время готовки:15 мин</p>
+                <p>Цена: 3200 тг</p>
+                <button class="btn btn-primary add-to-cart" data-name="Рамен" data-price="3200">Добавить в корзину</button>
+            </div>
+            <div class="product-item">
+                <img src="sushi-philadelphia.jpg" alt="Авамори">
+                <h3>"Филадельфия"</h3>
+                <p class="specs">Суши с лососем, авокадо и сливочным сыром<br>Порция:8 шт<br>Время готовки:10 мин</p>
+                <p>Цена: 3500 тг</p>
+                <button class="btn btn-primary add-to-cart" data-name="Суши ролл Филадельфия" data-price="3500">Добавить в корзину</button>
+            </div>
+            <div class="product-item">
+                <img src="sushi-califfornia.jpg" alt="Авамори">
+                <h3>"Калифорния"</h3>
+                <p class="specs">Суши с крабовым мясом, авокадо и огурцом<br>Порция:8 шт<br>Время готовки:10 мин</p>
+                <p>Цена: 3000 тг</p>
+                <button class="btn btn-primary add-to-cart" data-name="Суши ролл Калифорния" data-price="3000">Добавить в корзину</button>
+            </div>
+            <!-- Добавьте больше товаров по мере необходимости -->
+        </div>
+    </div>
+</section>
+
+    
+    
+        <script>
+            function changeDrinkImage(imageName, listItem) {
+                document.getElementById('drink-image').src = imageName;
+                highlightSelected(listItem, 'drink-list');
+            }
+        
+            function changeDishImage(imageName, listItem) {
+                document.getElementById('dish-image').src = imageName;
+                highlightSelected(listItem, 'dish-list');
+            }
+        
+            function highlightSelected(selectedItem, listId) {
+                // Сбрасываем подсветку для всех пунктов списка
+                document.querySelectorAll('#' + listId + ' li').forEach(item => item.style.backgroundColor = 'transparent');
+                // Подсвечиваем выбранный пункт списка
+                selectedItem.style.backgroundColor = 'lightgray';
+            }
+        </script>
+        
+        
+        
+    </div>
+    
+</section>
+
+
+    <!-- Корзина -->
+    <section id="cart">
+        <div class="container">
+            <h2 style="Background-color: rgba(0, 0, 0, 0.71);">Ваша Корзина</h2>
+            <!-- Таблица элементов корзины -->
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Количество</th>
+                        <th>Цена</th>
+                    </tr>
+                </thead>
+                <tbody id="cart-items">
+                    <!-- Элементы корзины будут добавляться с помощью JavaScript -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2">Общая сумма + 10% Обслуживание:</td>
+                        <td id="cart-total">0 тг</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <button class="btn btn-primary" id="checkout">Заказать</button>
+        </div>
+    </section>
+    
+    
+    <!-- Модальное окно для заказа -->
+    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="orderModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content bg-dark text-light">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderModalLabel">Оформление заказа</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Имя:</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contact">Контактный номер:</label>
+                            <input type="tel" class="form-control" id="contact" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Адрес:</label>
+                            <textarea class="form-control" id="address" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="time">Время доставки:</label>
+                            <input type="datetime-local" class="form-control" id="time" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                    <button type="button" class="btn btn-primary" id="place-order">Подтвердить заказ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Модальное окно для бронирования -->
+   <!-- Модальное окно для бронирования -->
+   <div class="modal fade" id="bookingModal" tabindex="-1" role="dialog" aria-labelledby="bookingModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookingModalLabel">Бронирование столика</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="booking-name" class="text-light">Ваше Имя:</label>
+                        <input type="text" class="form-control" id="booking-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="guests">Количество гостей:</label>
+                        <input type="number" class="form-control" id="guests" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="booking-date">Дата:</label>
+                        <input type="date" class="form-control" id="booking-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="booking-time">Время:</label>
+                        <input type="time" class="form-control" id="booking-time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="table-number">Номер столика:</label>
+                        <select class="form-control" id="table-number">
+                            <option value="1">Столик 1</option>
+                            <option value="2">Столик 2</option>
+                            <option value="3">Столик 3</option>
+                            <option value="3">Столик 4</option>
+                            <option value="3">Столик 5</option>
+                            <option value="3">Столик 6</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                       
+                        <img src="table-layout.jpg" alt="Расположение столиков" class="img-fluid">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-primary" id="place-booking">Забронировать</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+   
+    <footer style="background-color: rgb(0, 0, 0, 0.917);">
+        <div class="container">
+            <h2>Наши Контакты</h2>
+            <p>Адрес: ул. Самураев, 42, Токио, Япония<br>
+            Телефон: +77073931308<br>
+            Email: dragneeonatsu@gmail.com</p>
+            <p>&copy; 2024 Бар Arahabaki-shin no Haka. Все права защищены.</p>
+        </div>
+    </footer>
+    <!-- jQuery, Popper.js, Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- JavaScript код -->
+    <script>
+        
+ $(document).ready(function() {
+    // Корзина
+    var cart = [];
+
+    // Добавление в корзину
+    $(".add-to-cart").click(function() {
+        var name = $(this).data("name");
+        var price = parseFloat($(this).data("price"));
+        var found = false;
+
+        // Проверяем, есть ли уже такой товар в корзине
+        $.each(cart, function(index, item) {
+            if (item.name === name) {
+                item.quantity++;
+                found = true;
+                return false; // Прерываем цикл, если товар найден
+            }
+        });
+
+        // Если товар не найден, добавляем его в корзину
+        if (!found) {
+            var item = {
+                name: name,
+                price: price,
+                quantity: 1
+            };
+            cart.push(item);
+        }
+
+        updateCart();
+    });
+
+    // Обновление корзины
+    function updateCart() {
+        $("#cart-items").empty();
+        var totalPrice = 0;
+        $.each(cart, function(index, item) {
+            var itemHtml = "<tr><td>" + item.name + "</td><td>" + item.quantity + "</td><td>" + (item.price * item.quantity).toFixed(2) + " тг</td></tr>";
+            $("#cart-items").append(itemHtml);
+            totalPrice += item.price * item.quantity;
+        });
+        // Добавляем 10% за обслуживание
+        var serviceCharge = totalPrice * 0.1;
+        var totalPriceWithService = totalPrice + serviceCharge;
+        $("#cart-total").text(totalPriceWithService.toFixed(2) + " тг");
+    }
+
+    // Заказ
+    $("#checkout").click(function() {
+    $("#orderModal").modal("show");
+});
+
+$("#place-order").click(function() {
+    var time = $("#time").val();
+    var address = $("#address").val();
+    var contact = $("#contact").val();
+    var name = $("#name").val();
+
+    // Отправка заказа
+    sendMessageToTelegramOrder(time, address, contact, name);
+
+    // Очистка корзины
+    cart = [];
+    updateCart();
+
+    // Закрытие модального окна
+    $("#orderModal").modal("hide");
+});
+
+// Функция для отправки информации о заказе в Телеграм
+function sendMessageToTelegramOrder(time, address, contact, name) {
+    var chatId = "1620723388";
+    var botToken = "6994419683:AAFYQ4v470oTNFz9ZnFWdb-WpcvxcN4TIJI";
+    var messageText = "Заказ:\n";
+    
+    // Добавление списка блюд и напитков из корзины
+    $.each(cart, function(index, item) {
+        messageText += item.name + " - " + item.quantity + "шт.\n";
+    });
+
+    // Добавление общей суммы заказа
+    var totalPrice = 0;
+    $.each(cart, function(index, item) {
+        totalPrice += item.price * item.quantity;
+    });
+    messageText += "Общая сумма заказа: " + totalPrice.toFixed(2) + " тг\n";
+
+    // Добавление контактной информации
+    messageText += "Время доставки: " + time + "\n";
+    messageText += "Адрес: " + address + "\n";
+    messageText += "Контакт: " + contact + "\n";
+    messageText += "Имя: " + name;
+
+    var apiUrl = "https://api.telegram.org/bot" + botToken + "/sendMessage";
+    var requestData = {
+        chat_id: chatId,
+        text: messageText
+    };
+    var requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    };
+
+    fetch(apiUrl, requestOptions)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log('Order message sent successfully');
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+}
+
+
+    // Бронирование
+   // Бронирование
+$("#place-booking").click(function() {
+    var bookingTime = $("#booking-time").val();
+    var bookingDate = $("#booking-date").val();
+    var tableNumber = $("#table-number").val();
+    var guests = $("#guests").val();
+    var bookingName = $("#booking-name").val();
+
+    // Закрытие модального окна
+    $("#bookingModal").modal("hide");
+
+    // Отправка информации в Телеграм
+    sendMessageToTelegramConfirmation(bookingTime, bookingDate, tableNumber, guests, bookingName);
+});
+
+// Функция для отправки подтверждения бронирования в Телеграм
+function sendMessageToTelegramConfirmation(time, date, tableNumber, guests, name) {
+    var chatId = "1620723388";
+    var botToken = "6994419683:AAFYQ4v470oTNFz9ZnFWdb-WpcvxcN4TIJI";
+    var messageText = "Забронирован стол №" + tableNumber + " на " + date + " в " + time + " для " + guests + " гостей. Контактное лицо: " + name;
+
+    var apiUrl = "https://api.telegram.org/bot" + botToken + "/sendMessage";
+    var requestData = {
+        chat_id: chatId,
+        text: messageText
+    };
+    var requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestData)
+    };
+
+    fetch(apiUrl, requestOptions)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log('Confirmation message sent successfully');
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+
+
+
+    }
+
+    // Прокрутка к разделу "Заказ"
+    function scrollToOrder() {
+        $('html, body').animate({
+            scrollTop: $("#order").offset().top
+        }, 1000);
+    }
+});
+
+    </script>
+      
+</body>
+</html>
